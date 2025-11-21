@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Educativo: Como Funciona a Internet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-item.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .menu-item i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-item span {
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .progress-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .mark-read-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .mark-read-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .mark-read-btn.read {
+            background-color: #95a5a6;
+            cursor: default;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-left: 4px solid var(--secondary);
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: rgba(243, 156, 18, 0.1);
+            padding: 1rem;
+            border-left: 4px solid var(--warning);
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 1rem;
+            border-left: 4px solid var(--danger);
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .success {
+            background-color: rgba(46, 204, 113, 0.1);
+            padding: 1rem;
+            border-left: 4px solid var(--success);
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .modem-visual {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .modem {
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modem-lights {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #555;
+            position: relative;
+        }
+        
+        .light::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 20px;
+            top: -2px;
+            font-size: 0.7rem;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        .light.power { background-color: var(--success); }
+        .light.internet { background-color: var(--success); }
+        .light.wifi { background-color: var(--success); }
+        .light.ethernet { background-color: #555; }
+        
+        .light-description {
+            max-width: 300px;
+        }
+        
+        .light-description h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .speed-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .speed-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .speed-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .speed-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .security-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tip-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tip-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tip-card h4::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .quiz-option {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .quiz-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .quiz-option.selected {
+            background-color: rgba(52, 152, 219, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .quiz-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .quiz-result.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .quiz-result.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .final-results {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .final-results.good {
+            background-color: rgba(46, 204, 113, 0.2);
+            border: 2px solid var(--success);
+        }
+        
+        .final-results.average {
+            background-color: rgba(243, 156, 18, 0.2);
+            border: 2px solid var(--warning);
+        }
+        
+        .final-results.poor {
+            background-color: rgba(231, 76, 60, 0.2);
+            border: 2px solid var(--danger);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .menu-item {
+                width: 100%;
+                max-width: 250px;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 1rem;
+            }
+            
+            .menu-item i {
+                margin-bottom: 0;
+            }
+            
+            .modem-visual {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .speed-explanation, .security-tips {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tutorial Educativo: Como Funciona a Internet</h1>
+        <p class="subtitle">Entenda as principais características, funcionamento e segurança da internet</p>
+    </header>
+    
+    <div class="container">
+        <div class="nav-menu">
+            <div class="menu-item active" data-tab="intro">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </div>
+            <div class="menu-item" data-tab="modem">
+                <i class="fas fa-wifi"></i>
+                <span>Modem</span>
+            </div>
+            <div class="menu-item" data-tab="wifi">
+                <i class="fas fa-network-wired"></i>
+                <span>WiFi & Redes</span>
+            </div>
+            <div class="menu-item" data-tab="security">
+                <i class="fas fa-shield-alt"></i>
+                <span>Segurança</span>
+            </div>
+            <div class="menu-item" data-tab="quiz">
+                <i class="fas fa-question-circle"></i>
+                <span>Teste</span>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="global-progress"></div>
+        </div>
+        
+        <div id="intro" class="tab-content active">
+            <div class="card">
+                <div class="progress-indicator">
+                    <button class="mark-read-btn" data-section="intro">Marcar como Lido</button>
+                </div>
+                <h2>O que é a Internet?</h2>
+                <p>A internet é uma rede global de computadores interconectados que permite a troca de informações e comunicação em tempo real. Ela funciona através de uma infraestrutura complexa que inclui cabos, satélites, roteadores e servidores.</p>
+                
+                <h3>Características Principais</h3>
+                <ul>
+                    <li><strong>Global:</strong> Conecta pessoas e dispositivos em todo o mundo</li>
+                    <li><strong>Descentralizada:</strong> Não é controlada por uma única entidade</li>
+                    <li><strong>Interconectada:</strong> Diversas redes se comunicam entre si</li>
+                    <li><strong>Escalável:</strong> Pode crescer para acomodar mais usuários e dispositivos</li>
+                </ul>
+                
+                <div class="highlight">
+                    <p>A internet não é a mesma coisa que a World Wide Web (WWW). A internet é a infraestrutura, enquanto a WWW é um serviço que funciona sobre essa infraestrutura.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="modem" class="tab-content">
+            <div class="card">
+                <div class="progress-indicator">
+                    <button class="mark-read-btn" data-section="modem">Marcar como Lido</button>
+                </div>
+                <h2>O Modem: O Portal para a Internet</h2>
+                <p>O modem é o dispositivo que converte os sinais digitais do seu computador em sinais analógicos que podem trafegar pela linha telefônica ou cabo, e vice-versa. É a ponte entre sua rede doméstica e a internet.</p>
+                
+                <h3>Luzes do Modem e Seus Significados</h3>
+                
+                <div class="modem-visual">
+                    <div class="modem">
+                        <div class="modem-lights">
+                            <div class="light power" data-label="Power"></div>
+                            <div class="light internet" data-label="Internet"></div>
+                            <div class="light wifi" data-label="WiFi"></div>
+                            <div class="light ethernet" data-label="Ethernet"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="light-description">
+                        <h4>Power (Energia)</h4>
+                        <p>Deve estar sempre acesa. Se estiver apagada, verifique a conexão elétrica.</p>
+                        
+                        <h4>Internet</h4>
+                        <p>Indica conexão com a internet. Piscando significa tráfego de dados. Apagada indica problema de conexão.</p>
+                        
+                        <h4>WiFi</h4>
+                        <p>Indica que a rede sem fio está ativa. Pisca quando há dispositivos conectados.</p>
+                        
+                        <h4>Ethernet</h4>
+                        <p>Acende quando há dispositivos conectados via cabo. Pisca durante transferência de dados.</p>
+                    </div>
+                </div>
+                
+                <h3>Problemas Comuns e Soluções</h3>
+                
+                <div class="warning">
+                    <h4>Internet lenta ou instável</h4>
+                    <p><strong>Causas possíveis:</strong> Muitos dispositivos conectados, interferência de outros aparelhos, distância do modem, problemas com o provedor.</p>
+                    <p><strong>Soluções:</strong> Reinicie o modem, verifique a posição do aparelho, desconecte dispositivos não utilizados.</p>
+                </div>
+                
+                <div class="danger">
+                    <h4>Luz da Internet apagada ou piscando em vermelho</h4>
+                    <p><strong>Causas possíveis:</strong> Problema na linha externa, falha no provedor, configurações incorretas.</p>
+                    <p><strong>Soluções:</strong> Reinicie o modem, verifique cabos conectados, entre em contato com o provedor.</p>
+                </div>
+                
+                <div class="success">
+                    <h4>WiFi não aparece</h4>
+                    <p><strong>Causas possíveis:</strong> WiFi desativado no modem, falha no roteador.</p>
+                    <p><strong>Soluções:</strong> Verifique se o botão WiFi está ativado no modem, reinicie o aparelho.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="wifi" class="tab-content">
+            <div class="card">
+                <div class="progress-indicator">
+                    <button class="mark-read-btn" data-section="wifi">Marcar como Lido</button>
+                </div>
+                <h2>Como Funciona o WiFi</h2>
+                <p>WiFi (Wireless Fidelity) é uma tecnologia que permite que dispositivos se conectem à internet sem fios, usando ondas de rádio. O roteador converte os dados da internet em sinais de rádio, que são captados pelos dispositivos compatíveis.</p>
+                
+                <h3>Frequências e Padrões WiFi</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Padrão</th>
+                            <th>Frequência</th>
+                            <th>Velocidade Máxima</th>
+                            <th>Alcance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>WiFi 4 (802.11n)</td>
+                            <td>2.4 GHz</td>
+                            <td>150-600 Mbps</td>
+                            <td>Bom</td>
+                        </tr>
+                        <tr>
+                            <td>WiFi 5 (802.11ac)</td>
+                            <td>5 GHz</td>
+                            <td>433 Mbps - 3.5 Gbps</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>WiFi 6 (802.11ax)</td>
+                            <td>2.4 GHz e 5 GHz</td>
+                            <td>Até 9.6 Gbps</td>
+                            <td>Excelente</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Velocidades de Internet: O Que Significam?</h3>
+                
+                <div class="speed-explanation">
+                    <div class="speed-card">
+                        <h4><i class="fas fa-download"></i> Download</h4>
+                        <p>Velocidade para receber dados da internet. Afeta:</p>
+                        <ul>
+                            <li>Carregamento de páginas</li>
+                            <li>Streaming de vídeos</li>
+                            <li>Download de arquivos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="speed-card">
+                        <h4><i class="fas fa-upload"></i> Upload</h4>
+                        <p>Velocidade para enviar dados para a internet. Afeta:</p>
+                        <ul>
+                            <li>Chamadas de vídeo</li>
+                            <li>Envio de arquivos grandes</li>
+                            <li>Transmissões ao vivo</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="speed-card">
+                        <h4><i class="fas fa-stopwatch"></i> Latência</h4>
+                        <p>Tempo de resposta da conexão. Afeta:</p>
+                        <ul>
+                            <li>Jogos online</li>
+                            <li>Chamadas de voz</li>
+                            <li>Experiência geral de navegação</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <h4>Entendendo Mbps (Megabits por segundo)</h4>
+                    <p>1 Mbps = 1.000.000 bits por segundo. Para converter para megabytes (MB): divida por 8.</p>
+                    <p><strong>Exemplo:</strong> Uma conexão de 100 Mbps permite baixar arquivos a aproximadamente 12,5 MB por segundo.</p>
+                </div>
+                
+                <h3>Fatores que Afetam a Qualidade do Sinal WiFi</h3>
+                <ul>
+                    <li><strong>Distância:</strong> Quanto mais longe do roteador, mais fraco o sinal</li>
+                    <li><strong>Obstáculos:</strong> Paredes, móveis e espelhos podem bloquear ou enfraquecer o sinal</li>
+                    <li><strong>Interferência:</strong> Outros aparelhos eletrônicos (micro-ondas, telefones sem fio) podem causar interferência</li>
+                    <li><strong>Quantidade de dispositivos:</strong> Muitos dispositivos conectados simultaneamente podem sobrecarregar a rede</li>
+                </ul>
+                
+                <div class="highlight">
+                    <h4>Dicas para Melhorar o Sinal WiFi</h4>
+                    <ul>
+                        <li>Posicione o roteador em local central e elevado</li>
+                        <li>Evite colocá-lo perto de aparelhos que causam interferência</li>
+                        <li>Use repetidores de sinal para áreas maiores</li>
+                        <li>Atualize o firmware do roteador regularmente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="security" class="tab-content">
+            <div class="card">
+                <div class="progress-indicator">
+                    <button class="mark-read-btn" data-section="security">Marcar como Lido</button>
+                </div>
+                <h2>Segurança Digital e Saúde Online</h2>
+                <p>Proteger sua conexão e seus dados é fundamental para uma experiência segura na internet. A saúde digital envolve tanto a segurança técnica quanto o uso consciente da tecnologia.</p>
+                
+                <h3>Dicas de Segurança Básica</h3>
+                
+                <div class="security-tips">
+                    <div class="tip-card">
+                        <h4>Senhas Fortes</h4>
+                        <p>Use senhas complexas com letras, números e símbolos. Não reuse senhas entre serviços diferentes.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <h4>Atualizações Regulares</h4>
+                        <p>Mantenha seu sistema operacional, aplicativos e antivírus sempre atualizados.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <h4>Cuidado com Links Suspeitos</h4>
+                        <p>Não clique em links de emails ou mensagens de remetentes desconhecidos.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <h4>WiFi Público</h4>
+                        <p>Evite acessar informações sensíveis em redes WiFi públicas. Use uma VPN quando necessário.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <h4>Backup de Dados</h4>
+                        <p>Faça backup regular dos seus arquivos importantes em locais seguros.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <h4>Autenticação em Dois Fatores</h4>
+                        <p>Ative a autenticação em dois fatores sempre que possível para maior segurança.</p>
+                    </div>
+                </div>
+                
+                <h3>Saúde Digital: Equilíbrio no Uso da Tecnologia</h3>
+                
+                <div class="warning">
+                    <h4>Proteja sua Saúde Mental</h4>
+                    <p>Estabeleça limites de tempo de uso, faça pausas regulares, evite comparar sua vida com as redes sociais e priorize interações presenciais.</p>
+                </div>
+                
+                <div class="success">
+                    <h4>Práticas Saudáveis</h4>
+                    <ul>
+                        <li>Desative notificações desnecessárias para reduzir distrações</li>
+                        <li>Estabeleça horários sem tecnologia, especialmente antes de dormir</li>
+                        <li>Use a tecnologia para conectar-se com pessoas, não para substituir relações</li>
+                        <li>Pratique a atenção plena ao usar dispositivos digitais</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="quiz" class="tab-content">
+            <div class="card">
+                <h2>Teste seus Conhecimentos</h2>
+                <p>Responda às perguntas abaixo para verificar o que você aprendeu sobre o funcionamento da internet.</p>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <h3>1. O que significa quando a luz "Internet" do modem está piscando?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="true">Há tráfego de dados através da conexão</div>
+                            <div class="quiz-option">O modem está com problemas e precisa ser reiniciado</div>
+                            <div class="quiz-option">A conexão WiFi está desativada</div>
+                            <div class="quiz-option">O modem está superaquecendo</div>
+                        </div>
+                        <div class="quiz-result"></div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3>2. Qual frequência WiFi geralmente tem melhor alcance mas velocidade menor?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option">5 GHz</div>
+                            <div class="quiz-option" data-correct="true">2.4 GHz</div>
+                            <div class="quiz-option">6 GHz</div>
+                            <div class="quiz-option">900 MHz</div>
+                        </div>
+                        <div class="quiz-result"></div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3>3. Qual destas NÃO é uma boa prática de segurança digital?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option">Usar senhas diferentes para cada serviço</div>
+                            <div class="quiz-option">Ativar autenticação em dois fatores</div>
+                            <div class="quiz-option" data-correct="true">Usar a mesma senha para todas as contas online</div>
+                            <div class="quiz-option">Fazer backup regular dos dados importantes</div>
+                        </div>
+                        <div class="quiz-result"></div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3>4. O que é recomendado para melhorar o sinal WiFi em uma casa grande?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option">Colocar o roteador no porão</div>
+                            <div class="quiz-option">Desligar todos os outros dispositivos</div>
+                            <div class="quiz-option" data-correct="true">Usar repetidores de sinal ou um sistema mesh</div>
+                            <div class="quiz-option">Reduzir a velocidade da internet contratada</div>
+                        </div>
+                        <div class="quiz-result"></div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3>5. Qual é a principal diferença entre velocidade de download e upload?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option">Download é mais rápido que upload em todas as conexões</div>
+                            <div class="quiz-option" data-correct="true">Download é para receber dados, upload para enviar</div>
+                            <div class="quiz-option">Upload é mais importante para assistir vídeos online</div>
+                            <div class="quiz-option">Não há diferença prática entre os dois</div>
+                        </div>
+                        <div class="quiz-result"></div>
+                    </div>
+                    
+                    <button id="check-answers" class="btn">Verificar Respostas</button>
+                </div>
+                
+                <div class="final-results" id="final-results">
+                    <h3 id="result-title">Resultado do Quiz</h3>
+                    <p id="result-message"></p>
+                    <button id="try-again" class="btn" style="margin-top: 1rem;">Tentar Novamente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Tutorial Educativo sobre Funcionamento da Internet</p>
+        <p>Desenvolvido para promover conhecimento e saúde digital</p>
+    </footer>
+
+    <script>
+        // Estado do progresso
+        const progressState = {
+            intro: false,
+            modem: false,
+            wifi: false,
+            security: false,
+            quiz: false
+        };
+        
+        // Navegação entre abas
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove a classe active de todos os itens do menu
+                document.querySelectorAll('.menu-item').forEach(menuItem => menuItem.classList.remove('active'));
+                
+                // Adiciona a classe active ao item clicado
+                item.classList.add('active');
+                
+                // Remove a classe active de todas as abas
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Mostra o conteúdo correspondente
+                const tabId = item.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Atualiza a barra de progresso
+                updateProgressBar();
+            });
+        });
+        
+        // Sistema de marcação de conteúdo lido
+        document.querySelectorAll('.mark-read-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.getAttribute('data-section');
+                progressState[section] = true;
+                
+                // Atualiza o botão
+                button.textContent = 'Conteúdo Lido';
+                button.classList.add('read');
+                button.disabled = true;
+                
+                // Atualiza a barra de progresso
+                updateProgressBar();
+                
+                // Atualiza o menu
+                updateMenuProgress();
+            });
+        });
+        
+        // Atualiza a barra de progresso global
+        function updateProgressBar() {
+            const totalSections = Object.keys(progressState).length;
+            const completedSections = Object.values(progressState).filter(val => val).length;
+            const progressPercentage = (completedSections / totalSections) * 100;
+            
+            document.getElementById('global-progress').style.width = `${progressPercentage}%`;
+        }
+        
+        // Atualiza os ícones do menu com base no progresso
+        function updateMenuProgress() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const tabId = item.getAttribute('data-tab');
+                if (progressState[tabId]) {
+                    const icon = item.querySelector('i');
+                    icon.className = 'fas fa-check-circle';
+                    icon.style.color = 'var(--success)';
+                }
+            });
+        }
+        
+        // Quiz interativo
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove a seleção de outras opções na mesma pergunta
+                const parent = option.parentElement;
+                parent.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Seleciona a opção clicada
+                option.classList.add('selected');
+            });
+        });
+        
+        document.getElementById('check-answers').addEventListener('click', () => {
+            let correctAnswers = 0;
+            const totalQuestions = document.querySelectorAll('.quiz-question').length;
+            
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.quiz-option.selected');
+                const resultDiv = question.querySelector('.quiz-result');
+                
+                if (selectedOption) {
+                    if (selectedOption.hasAttribute('data-correct')) {
+                        resultDiv.textContent = 'Correto!';
+                        resultDiv.className = 'quiz-result correct';
+                        correctAnswers++;
+                    } else {
+                        resultDiv.textContent = 'Incorreto. Tente novamente.';
+                        resultDiv.className = 'quiz-result incorrect';
+                    }
+                    resultDiv.style.display = 'block';
+                } else {
+                    resultDiv.textContent = 'Por favor, selecione uma resposta.';
+                    resultDiv.className = 'quiz-result incorrect';
+                    resultDiv.style.display = 'block';
+                }
+            });
+            
+            // Mostra resultado final
+            showFinalResults(correctAnswers, totalQuestions);
+        });
+        
+        // Botão tentar novamente
+        document.getElementById('try-again').addEventListener('click', () => {
+            // Reseta as seleções
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Esconde os resultados
+            document.querySelectorAll('.quiz-result').forEach(result => {
+                result.style.display = 'none';
+            });
+            
+            // Esconde o resultado final
+            document.getElementById('final-results').style.display = 'none';
+        });
+        
+        // Mostra resultado final personalizado
+        function showFinalResults(correct, total) {
+            const percentage = (correct / total) * 100;
+            const resultsDiv = document.getElementById('final-results');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            
+            resultsDiv.style.display = 'block';
+            
+            if (percentage >= 80) {
+                resultsDiv.className = 'final-results good';
+                resultTitle.textContent = 'Parabéns! Excelente Resultado!';
+                resultMessage.innerHTML = `Você acertou ${correct} de ${total} perguntas.<br>Seu conhecimento sobre internet é impressionante! Continue explorando e aprendendo.`;
+                
+                // Marca o quiz como concluído
+                progressState.quiz = true;
+                updateProgressBar();
+                updateMenuProgress();
+                
+            } else if (percentage >= 60) {
+                resultsDiv.className = 'final-results average';
+                resultTitle.textContent = 'Bom Trabalho!';
+                resultMessage.innerHTML = `Você acertou ${correct} de ${total} perguntas.<br>Você tem um bom conhecimento, mas pode melhorar revisando alguns conceitos.`;
+            } else {
+                resultsDiv.className = 'final-results poor';
+                resultTitle.textContent = 'Continue Aprendendo!';
+                resultMessage.innerHTML = `Você acertou ${correct} de ${total} perguntas.<br>Não desanime! Revise o conteúdo e tente novamente. O aprendizado é um processo contínuo.`;
+            }
+        }
+        
+        // Inicializa a barra de progresso
+        updateProgressBar();
+    </script>
+</body>
+</html>
